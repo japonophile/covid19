@@ -2,11 +2,14 @@ from lib import translate, cc
 
 # Protein alignments: http://virological.org/t/alignment-of-58-sarbecovirus-genomes-for-conservation-analysis-of-sars-cov-2/430
 
+# https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
+# https://www.ncbi.nlm.nih.gov/nuccore/MN908947
+# https://zhanglab.ccmb.med.umich.edu/C-I-TASSER/2019-nCov/
+
 # whole thing has a "lipid bilayer envelope", with S E M sticking out
 # the ORF proteins are non structural and form a "replicase-transcriptase complex"
 
 # copy machine == https://www.uniprot.org/uniprot/Q0ZJN1
-# https://zhanglab.ccmb.med.umich.edu/C-I-TASSER/2019-nCov/
 # zhanglab breaks this down into many more proteins, orf1b seems like a myth
 
 # begin: 266 base pair "untranslated"
@@ -14,14 +17,16 @@ from lib import translate, cc
 
 corona = {}
 
+# 1ab = replicase polyprotein, https://www.ncbi.nlm.nih.gov/protein/YP_009724389.1?report=graph
+# (same one for SARS v1 https://www.ncbi.nlm.nih.gov/protein/NP_828849.2?report=graph)
 # 1-15 are in orf1ab
-#    1 = Host translation inhibitor nsp1
+#    1 = Host translation inhibitor nsp1, leader protein
 #    2 = ???
 #    3 = Papin-like proteinase
 #        see diff https://www.ncbi.nlm.nih.gov/projects/msaviewer/?rid=7FXGTZFN016&coloring=cons
 #    4 = nsp4B_TM; contains transmenbrane domain 2 (TM2); produced by both pp1a and pp1b
 #    5 = Proteinase 3CL-PRO
-#    6 = ???
+#    6 = putative transmembrane domain
 #    7 = ???
 #    8 = ???
 #    9 = ssRNA-binding protein; produced by both pp1a and pp1ab
@@ -35,6 +40,7 @@ corona['orf1a'] = translate(cc[266-1:13483], True)
 ## orf1b = translate(cc[13468-1:21555], False)
 ## try to fix orf1b with this piece backwards by 18 base pairs
 corona['orf1b'] = translate(cc[13442-1:13468], False) + translate(cc[13468-1:21555], False)
+corona['orf1b'] = corona['orf1b'].strip('*')
 corona['orf1ab'] = corona['orf1a'] + corona['orf1b']
 
 # exploit vector, attaches to ACE2, also called "surface glycoprotein"

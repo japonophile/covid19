@@ -4,6 +4,9 @@ import os
 import requests
 import yaml
 
+# these are the publicly available "complete" sequences
+# https://www.gisaid.org/ has more (1200?), but this may require you to sign up
+
 ncov_seq_url = "https://www.ncbi.nlm.nih.gov/core/assets/genbank/files/ncov-sequences.yaml"
 seqs = yaml.load(requests.get(ncov_seq_url).text, Loader=yaml.FullLoader)
 seqs = seqs['genbank-sequences']
