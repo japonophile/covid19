@@ -3,4 +3,4 @@ editdistance==0.5.3
 nglview==2.7.5
 notebook==6.0.3
 requests==2.23.0
-PyYAML==5.3.1
+PyYAML==5.4
